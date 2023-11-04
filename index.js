@@ -26,12 +26,43 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
+
+    const categoryCollection = client.db("job-hunt").collection('job-category');
+    const jobsCollection = client.db("job-hunt").collection('add-job');
+
+
+    // get category data 
+    app.get('/api/job-category', async(req, res)=>{
+        const result = await categoryCollection.find().toArray();
+        res.send(result)
+    })
+    // get category wise job data data 
+    // /api/jobs/category?name=web-development
+    app.get('/api/jobs/category', async(req, res)=>{
+        const category = req.query.category
+        const query = {category : category}
+        console.log(category);
+        const result = await jobsCollection.find(query).toArray();
+        res.send(result)
+    })
+
+
+
+
+
+
+
+
+
+
+
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
     // Ensures that the client will close when you finish/error
-    await client.close();
+    // await client.close();
   }
 }
 run().catch(console.dir);
