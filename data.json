@@ -1,87 +1,134 @@
 [
   {
     "job_title": "Responsive Website Design",
-    "deadline": "2 weeks",
-    "price_range": "$1,000 - $2,000",
-    "short_description": "Create a modern, responsive website for a small business.",
-    "category": "Web Development"
+    "startDate": "2023-11-10",
+    "endDate": "2023-11-24",
+    "minPrice": "$1,000",
+    "maxPrice": "$2,000",
+    "description": "Create a modern, responsive website for a small business.",
+    "category": "Web Development",
+    "author": "John Doe",
+    "email": "johndoe@example.com"
   },
   {
     "job_title": "E-commerce Website Development",
-    "deadline": "4 weeks",
-    "price_range": "$2,500 - $5,000",
-    "short_description": "Build a fully functional online store with payment integration.",
-    "category": "Web Development"
+    "startDate": "2023-11-15",
+    "endDate": "2023-12-15",
+    "minPrice": "$2,500",
+    "maxPrice": "$5,000",
+    "description": "Build a fully functional online store with payment integration.",
+    "category": "Web Development",
+    "author": "John Doe",
+    "email": "johndoe@example.com"
   },
   {
     "job_title": "Custom WordPress Theme",
-    "deadline": "3 weeks",
-    "price_range": "$800 - $1,500",
-    "short_description": "Design and develop a unique WordPress theme for a blog.",
-    "category": "Web Development"
+    "startDate": "2023-11-20",
+    "endDate": "2023-12-10",
+    "minPrice": "$800",
+    "maxPrice": "$1,500",
+    "description": "Design and develop a unique WordPress theme for a blog.",
+    "category": "Web Development",
+    "author": "John Doe",
+    "email": "johndoe@example.com"
   },
   {
     "job_title": "Web App Development",
-    "deadline": "6 weeks",
-    "price_range": "$3,000 - $6,000",
-    "short_description": "Create a web application with user authentication and database integration.",
-    "category": "Web Development"
+    "startDate": "2023-11-25",
+    "endDate": "2024-01-06",
+    "minPrice": "$3,000",
+    "maxPrice": "$6,000",
+    "description": "Create a web application with user authentication and database integration.",
+    "category": "Web Development",
+    "author": "John Doe",
+    "email": "johndoe@example.com"
   },
   {
     "job_title": "Logo Design",
-    "deadline": "1 week",
-    "price_range": "$200 - $500",
-    "short_description": "Design a unique and memorable logo for a startup.",
-    "category": "Graphics Design"
+    "startDate": "2023-11-10",
+    "endDate": "2023-11-17",
+    "minPrice": "$200",
+    "maxPrice": "$500",
+    "description": "Design a unique and memorable logo for a startup.",
+    "category": "Graphics Design",
+    "author": "John Doe",
+    "email": "johndoe@example.com"
   },
   {
     "job_title": "Brochure Design",
-    "deadline": "2 weeks",
-    "price_range": "$300 - $700",
-    "short_description": "Create a visually appealing brochure for a marketing campaign.",
-    "category": "Graphics Design"
+    "startDate": "2023-11-15",
+    "endDate": "2023-11-29",
+    "minPrice": "$300",
+    "maxPrice": "$700",
+    "description": "Create a visually appealing brochure for a marketing campaign.",
+    "category": "Graphics Design",
+    "author": "John Doe",
+    "email": "johndoe@example.com"
   },
   {
     "job_title": "Banner Ad Design",
-    "deadline": "1 week",
-    "price_range": "$100 - $250",
-    "short_description": "Design eye-catching banner ads for an online advertising campaign.",
-    "category": "Graphics Design"
+    "startDate": "2023-11-20",
+    "endDate": "2023-11-27",
+    "minPrice": "$100",
+    "maxPrice": "$250",
+    "description": "Design eye-catching banner ads for an online advertising campaign.",
+    "category": "Graphics Design",
+    "author": "John Doe",
+    "email": "johndoe@example.com"
   },
   {
     "job_title": "Illustration Artwork",
-    "deadline": "3 weeks",
-    "price_range": "$400 - $800",
-    "short_description": "Produce custom illustrations for a children's book project.",
-    "category": "Graphics Design"
+    "startDate": "2023-11-25",
+    "endDate": "2023-12-15",
+    "minPrice": "$400",
+    "maxPrice": "$800",
+    "description": "Produce custom illustrations for a children's book project.",
+    "category": "Graphics Design",
+    "author": "John Doe",
+    "email": "johndoe@example.com"
   },
-
   {
     "job_title": "Social Media Management",
-    "deadline": "Ongoing",
-    "price_range": "$500 - $1,500 per month",
-    "short_description": "Manage and grow social media presence for a brand.",
-    "category": "Digital Marketing"
+    "startDate": "2023-11-10",
+    "endDate": "2023-12-31",
+    "minPrice": "$500",
+    "maxPrice": "$1,500",
+    "description": "Manage and grow social media presence for a brand.",
+    "category": "Digital Marketing",
+    "author": "John Doe",
+    "email": "johndoe@example.com"
   },
   {
     "job_title": "PPC Campaign Setup",
-    "deadline": "2 weeks",
-    "price_range": "$800 - $1,200",
-    "short_description": "Set up and optimize pay-per-click advertising campaigns.",
-    "category": "Digital Marketing"
+    "startDate": "2023-11-15",
+    "endDate": "2023-11-29",
+    "minPrice": "$800",
+    "maxPrice": "$1,200",
+    "description": "Set up and optimize pay-per-click advertising campaigns.",
+    "category": "Digital Marketing",
+    "author": "John Doe",
+    "email": "johndoe@example.com"
   },
   {
     "job_title": "SEO Audit and Optimization",
-    "deadline": "4 weeks",
-    "price_range": "$1,200 - $2,500",
-    "short_description": "Improve website SEO with keyword research and on-page optimization.",
-    "category": "Digital Marketing"
+    "startDate": "2023-11-20",
+    "endDate": "2023-12-20",
+    "minPrice": "$1,200",
+    "maxPrice": "$2,500",
+    "description": "Improve website SEO with keyword research and on-page optimization.",
+    "category": "Digital Marketing",
+    "author": "John Doe",
+    "email": "johndoe@example.com"
   },
   {
     "job_title": "Email Marketing Campaign",
-    "deadline": "3 weeks",
-    "price_range": "$600 - $1,000",
-    "short_description": "Create and run an email marketing campaign for a product launch.",
-    "category": "Digital Marketing"
+    "startDate": "2023-11-25",
+    "endDate": "2023-12-16",
+    "minPrice": "$600",
+    "maxPrice": "$1,000",
+    "description": "Create and run an email marketing campaign for a product launch.",
+    "category": "Digital Marketing",
+    "author": "John Doe",
+    "email": "johndoe@example.com"
   }
 ]

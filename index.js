@@ -63,6 +63,14 @@ async function run() {
       res.send(result)
     })
 
+    // create job post 
+    app.post('/api/jobs/category', async(req, res)=>{
+      const job = req.body;
+      console.log(job);
+      const result = await jobsCollection.insertOne(job)
+      res.send(result)
+    })
+
 
 
 
