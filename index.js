@@ -80,6 +80,14 @@ async function run() {
       console.log('applied job',job, result);
     })
 
+    // show Applied job to the user 
+    app.get('/api/jobs/applied', async(req, res)=>{
+      const email = req.query.email
+      const query = {employeeEmail: email}
+      const result = await appliedJobs.find(query).toArray()
+      res.send(result)
+    })
+
 
 
 
