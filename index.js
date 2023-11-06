@@ -88,6 +88,16 @@ async function run() {
       res.send(result)
     })
 
+    // get user specified job post to show the user
+    app.get('/api/jobs/my-posted-jobs', async(req, res)=>{
+      const email = req.query.email
+      console.log(email);
+      const query = {email : email}
+      // console.log(category);
+      const result = await jobsCollection.find(query).toArray();
+      res.send(result)
+  })
+
 
 
 
