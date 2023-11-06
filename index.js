@@ -98,6 +98,15 @@ async function run() {
       res.send(result)
   })
 
+  // update user posted job 
+  // get specific job post by id
+  app.get('/api/jobs/my-posted-job/update/:id', async(req, res)=>{
+    const id = req.params.id;
+    console.log(id);
+    const query = {_id: new ObjectId(id)}
+    const result = await jobsCollection.findOne(query)
+    res.send(result)
+  })
 
 
 
