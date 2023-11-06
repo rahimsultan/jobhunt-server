@@ -139,6 +139,35 @@ async function run() {
     console.log(result);
   })
 
+  // show bid requests all user except who post the job 
+  app.get('/api/jobs/bid-request', async(req, res)=>{
+    const email = req.query.email
+    const query = {employeeEmail: {$ne: email},authorEmail: email}
+    const result = await appliedJobs.find(query).toArray()
+    res.send(result)
+  })
+
+  // update bid status by owner
+  app.patch('/api/jobs/bid-request/:id', async(req, res)=>{
+    try {
+      const id = req.params.id
+    const response = req.body;
+    const query = {_id: new ObjectId(id)}
+    const doc ={
+      $set:{
+        status : response.status
+      }
+    }
+    const result = await appliedJobs.updateOne(query, doc)
+    res.send( result)
+    console.log(result);
+      
+    } catch (error) {
+      console.log(error);
+      res.status(500).send('Internal Server Error');
+    }
+  })
+
 
 
 
