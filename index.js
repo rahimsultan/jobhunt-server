@@ -130,6 +130,14 @@ async function run() {
     // console.log(filter, result);
   })
 
+  // delete job post 
+  app.delete('/api/jobs/my-posted-job/delete/:id', async(req, res)=>{
+    const id = req.params.id;
+    const query = {_id: new ObjectId(id)}
+    const result = await jobsCollection.deleteOne(query)
+    res.send(result)
+    console.log(result);
+  })
 
 
 
