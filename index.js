@@ -37,6 +37,7 @@ async function run() {
 
     const categoryCollection = client.db("job-hunt").collection('job-category');
     const jobsCollection = client.db("job-hunt").collection('add-job');
+    const appliedJobs = client.db("job-hunt").collection('applied-jobs');
 
 
     // get category data 
@@ -69,6 +70,14 @@ async function run() {
       console.log(job);
       const result = await jobsCollection.insertOne(job)
       res.send(result)
+    })
+
+    // all applied job 
+    app.post('/api/jobs/applied', async(req, res)=>{
+      const job = req.body;
+      const result = await appliedJobs.insertOne(job)
+      res.send(result)
+      console.log('applied job',job, result);
     })
 
 
