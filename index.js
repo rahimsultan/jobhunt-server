@@ -58,7 +58,7 @@ async function run() {
     // get specific job post by id
     app.get('/api/job/:jobid', async(req, res)=>{
       const id = req.params.jobid;
-      console.log(id);
+      // console.log(id);
       const query = {_id: new ObjectId(id)}
       const result = await jobsCollection.findOne(query)
       res.send(result)
@@ -77,7 +77,7 @@ async function run() {
       const job = req.body;
       const result = await appliedJobs.insertOne(job)
       res.send(result)
-      console.log('applied job',job, result);
+      // console.log('applied job',job, result);
     })
 
     // show Applied job to the user 
@@ -91,21 +91,43 @@ async function run() {
     // get user specified job post to show the user
     app.get('/api/jobs/my-posted-jobs', async(req, res)=>{
       const email = req.query.email
-      console.log(email);
+      // console.log(email);
       const query = {email : email}
       // console.log(category);
       const result = await jobsCollection.find(query).toArray();
       res.send(result)
   })
 
-  // update user posted job 
+  // find user posted job for update
   // get specific job post by id
   app.get('/api/jobs/my-posted-job/update/:id', async(req, res)=>{
     const id = req.params.id;
-    console.log(id);
+    // console.log(id);
     const query = {_id: new ObjectId(id)}
     const result = await jobsCollection.findOne(query)
     res.send(result)
+  })
+
+  // update job post using this api
+  app.patch('/api/jobs/my-posted-job/update/:id', async(req, res)=>{
+    const data = req.body
+    const id = req.params.id;
+    const filter = {_id: new ObjectId(id)}
+    const doc ={
+      $set:{
+            category: data.category,
+            description: data.description,
+            email: data.email,
+            endDate: data.endDate,
+            job_title:data.job_title,
+            maxPrice: data.maxPrice,
+            minPrice: data.minPrice,
+            startDate: data.startDate
+      }
+    }
+    const result = await jobsCollection.updateOne(filter, doc)
+    res.send(result)
+    // console.log(filter, result);
   })
 
 
