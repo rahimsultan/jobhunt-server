@@ -13,11 +13,11 @@ const port = process.env.PORT || 5000
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin: ['http://localhost:5173'],
+    origin: [ 'https://jobhunt-89be0.web.app', 'https://jobhunt-89be0.firebaseapp.com'],
     credentials: true
     }))
 
-
+// 'http://localhost:5173',https://jobhunt-89be0.web.app/
 
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@atlascluster.fvnorwx.mongodb.net/?retryWrites=true&w=majority`;
@@ -34,7 +34,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
 
     const categoryCollection = client.db("job-hunt").collection('job-category');
     const jobsCollection = client.db("job-hunt").collection('add-job');
@@ -71,16 +71,17 @@ async function run() {
      const token = jwt.sign(user,process.env.ACCESS_TOKEN, {expiresIn: '1hr'})
      res.cookie('token', token, {
       httpOnly: true,
-    secure: true,
-    sameSite: 'none'
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+    maxAge: 60*60*1000,
      }).send({success:true})
 
   })
 
-      app.post('/api/auth/logout', async (req, res) => {
+      app.post('/api/auth/logout', async(req, res) => {
         const user = req.body;
-
-        res.clearCookie('token', {maxAge:0}).send({ success: true });
+        console.log('log out', user);
+        res.clearCookie('token', {maxAge:0, secure:true, sameSite:none}).send({ success: true });
       });
 
 
@@ -229,15 +230,6 @@ async function run() {
   })
 
 
-
-
-
-
-
-
-
-
-
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
@@ -257,3 +249,4 @@ app.get('/', (req, res) => {
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
   })
+
