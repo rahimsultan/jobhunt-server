@@ -1,4 +1,5 @@
 const express = require('express')
+const jwt = require('jsonwebtoken');
 const cors = require('cors')
 require('dotenv').config()
 // const jwt = require('jsonwebtoken');
@@ -40,6 +41,49 @@ async function run() {
     const appliedJobs = client.db("job-hunt").collection('applied-jobs');
 
 
+
+    // verify token
+    const gateman=(req, res, next)=>{
+      const token = req?.cookies?.token
+      console.log(token);
+      if(!token){
+          return res.status(401).send({message:'opps unauthorised access'})
+      }
+      jwt.verify(token, process.env.ACCESS_TOKEN, function(err, decoded){
+          if(err){
+              res.status(401).send({message:' Unauthorised access'})
+          }
+          // console.log('decoded',decoded);
+          req.user = decoded
+          next()
+      })
+  }
+
+
+
+
+    // jwt authentication 
+    app.post('/api/access-token', async(req, res)=>{
+      // will get user {} from req.body
+      const user = req.body;
+
+      // jwt return token thats why we use a variable to store that
+     const token = jwt.sign(user,process.env.ACCESS_TOKEN, {expiresIn: '1hr'})
+     res.cookie('token', token, {
+      httpOnly: true,
+    secure: true,
+    sameSite: 'none'
+     }).send({success:true})
+
+  })
+
+      app.post('/api/auth/logout', async (req, res) => {
+        const user = req.body;
+
+        res.clearCookie('token', {maxAge:0}).send({ success: true });
+      });
+
+
     // get category data 
     app.get('/api/job-category', async(req, res)=>{
         const result = await categoryCollection.find().toArray();
@@ -72,7 +116,7 @@ async function run() {
       res.send(result)
     })
 
-    // all applied job 
+    // all applied job POST method
     app.post('/api/jobs/applied', async(req, res)=>{
       const job = req.body;
       const result = await appliedJobs.insertOne(job)
@@ -81,17 +125,28 @@ async function run() {
     })
 
     // show Applied job to the user 
-    app.get('/api/jobs/applied', async(req, res)=>{
-      const email = req.query.email
-      const query = {employeeEmail: email}
-      const result = await appliedJobs.find(query).toArray()
-      res.send(result)
+    app.get('/api/jobs/applied',gateman, async(req, res)=>{
+
+      try {
+        if(req.user.email !== req?.query?.email){
+          return res.status(403).send('forbidden access')
+        }
+        const email = req.query.email
+        const query = {employeeEmail: email}
+        const result = await appliedJobs.find(query).toArray()
+        res.send(result)
+        
+      } catch (error) {
+        console.log(error);
+      }
     })
 
     // get user specified job post to show the user
-    app.get('/api/jobs/my-posted-jobs', async(req, res)=>{
+    app.get('/api/jobs/my-posted-jobs',gateman, async(req, res)=>{
       const email = req.query.email
-      // console.log(email);
+      if(req.user.email !== email){
+        return res.status(403).send('unauthorized access')
+      }
       const query = {email : email}
       // console.log(category);
       const result = await jobsCollection.find(query).toArray();
@@ -139,11 +194,16 @@ async function run() {
     console.log(result);
   })
 
-  // show bid requests all user except who post the job 
-  app.get('/api/jobs/bid-request', async(req, res)=>{
+  // show bid requests all user except owner of the job post
+  app.get('/api/jobs/bid-request',gateman, async(req, res)=>{
+    
     const email = req.query.email
+    if(req.user.email !== email){
+      return res.status(403).send('unauthorized access')
+    }
     const query = {employeeEmail: {$ne: email},authorEmail: email}
     const result = await appliedJobs.find(query).toArray()
+    // console.log('request',req.user , email);
     res.send(result)
   })
 
