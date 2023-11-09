@@ -1,8 +1,7 @@
 const express = require('express')
+const cors = require('cors');
 const jwt = require('jsonwebtoken');
-const cors = require('cors')
 require('dotenv').config()
-// const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser')
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express()
@@ -13,8 +12,8 @@ const port = process.env.PORT || 5000
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin: [ 'https://jobhunt-89be0.web.app', 'https://jobhunt-89be0.firebaseapp.com'],
-    credentials: true
+    origin: ['https://jobhunt-89be0.web.app', 'https://jobhunt-89be0.firebaseapp.com'],
+    credentials: true,
     }))
 
 // 'http://localhost:5173',https://jobhunt-89be0.web.app/
