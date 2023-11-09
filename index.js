@@ -12,11 +12,10 @@ const port = process.env.PORT || 5000
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin: ['https://jobhunt-89be0.web.app', 'https://jobhunt-89be0.firebaseapp.com'],
-    credentials: true,
-    }))
+  origin: ['https://jobhunt-89be0.web.app','http://localhost:5173'],
+  credentials: true,
+}));
 
-// 'http://localhost:5173',https://jobhunt-89be0.web.app/
 
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@atlascluster.fvnorwx.mongodb.net/?retryWrites=true&w=majority`;
@@ -67,20 +66,20 @@ async function run() {
       const user = req.body;
 
       // jwt return token thats why we use a variable to store that
-     const token = jwt.sign(user,process.env.ACCESS_TOKEN, {expiresIn: '1hr'})
+     const token = jwt.sign(user,process.env.ACCESS_TOKEN, {expiresIn: '1h'})
      res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: process.env.NODE_ENV === 'production', 
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
-    maxAge: 60*60*1000,
-     }).send({success:true})
+
+  }).send({success:true})
 
   })
 
       app.post('/api/auth/logout', async(req, res) => {
         const user = req.body;
         console.log('log out', user);
-        res.clearCookie('token', {maxAge:0, secure:true, sameSite:none}).send({ success: true });
+        res.clearCookie('token', {maxAge:0, secure:true, sameSite:"none"}).send({ success: true });
       });
 
 
@@ -127,12 +126,18 @@ async function run() {
     // show Applied job to the user 
     app.get('/api/jobs/applied',gateman, async(req, res)=>{
 
+      console.log(req.query);
       try {
-        if(req.user.email !== req?.query?.email){
+        if(req?.user?.email !== req?.query?.email){
           return res.status(403).send('forbidden access')
         }
+        const filter = req.query.sort;
         const email = req.query.email
         const query = {employeeEmail: email}
+        if(filter){
+          console.log('from filter');
+          query.status = filter
+        }
         const result = await appliedJobs.find(query).toArray()
         res.send(result)
         
@@ -143,8 +148,8 @@ async function run() {
 
     // get user specified job post to show the user
     app.get('/api/jobs/my-posted-jobs',gateman, async(req, res)=>{
-      const email = req.query.email
-      if(req.user.email !== email){
+      const email = req?.query?.email
+      if(req?.user?.email !== email){
         return res.status(403).send('unauthorized access')
       }
       const query = {email : email}
@@ -197,8 +202,8 @@ async function run() {
   // show bid requests all user except owner of the job post
   app.get('/api/jobs/bid-request',gateman, async(req, res)=>{
     
-    const email = req.query.email
-    if(req.user.email !== email){
+    const email = req?.query?.email
+    if(req?.user?.email !== email){
       return res.status(403).send('unauthorized access')
     }
     const query = {employeeEmail: {$ne: email},authorEmail: email}
@@ -226,6 +231,13 @@ async function run() {
       console.log(error);
       res.status(500).send('Internal Server Error');
     }
+  })
+
+  // filter my bids
+  app.get('/api/jobs/my-bids', async(req, res)=>{
+    const sort = req.query.sort;
+
+    console.log(sort);
   })
 
 
